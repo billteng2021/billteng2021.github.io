@@ -33,7 +33,7 @@
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
   <p>
-    This is a test site
+    This is a test site @ June 2, 2021
   </p>
 </template>
 
