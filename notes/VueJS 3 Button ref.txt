@@ -1,0 +1,70 @@
+<template>
+  <div>
+    <button
+      :id="id"
+      class="ec-button"
+      :class="classObject"
+      :disabled="isDisabled"
+      @click="onClick"
+      @keyup="onKeyEvent"
+      :style="{ marginLeft: elmStyle }"
+    >
+      {{ options.text }}
+    </button>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref, computed, onMounted } from 'vue';
+import { IdGenerator } from '@/utils/IdGenerator';
+
+export default defineComponent({
+  name: 'hst-button',
+  props: {
+    options: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ['click'],
+  setup(props, { emit }) {
+    const id = ref(props.options.id || IdGenerator.generate());
+    const isDisabled = computed(() => props.options.disabled || false);
+    const elmStyle = computed(() => props.options.style || '');
+    const classObject = computed(() => {
+      const obj = {
+        'ec-button-wide': props.options.size === 'wide',
+        'ec-button-small': props.options.size === 'small',
+        'ec-button-medium': props.options.size === 'medium',
+      };
+      obj[`ec-button-${props.options.color}`] = true;
+      return obj;
+    });
+
+    function onClick(event: MouseEvent) {
+      emit('click', event);
+    }
+
+    function onKeyEvent(event: KeyboardEvent) {
+      if (event.key === 'Enter') {
+        onClick(event);
+      }
+    }
+
+    onMounted(() => {
+      if (!props.options.id) {
+        id.value = IdGenerator.generate();
+      }
+    });
+
+    return {
+      id,
+      isDisabled,
+      elmStyle,
+      classObject,
+      onClick,
+      onKeyEvent,
+    };
+  },
+});
+</script>

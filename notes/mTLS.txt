@@ -1,0 +1,59 @@
+Here is an example of how to create a CA and mTLS using OpenSSL ²:
+
+1. Create a private key for the CA:
+
+```
+openssl genrsa -out ca.key 2048
+```
+
+2. Create a self-signed certificate for the CA:
+
+```
+openssl req -new -x509 -days 365 -key ca.key -out ca.crt
+```
+
+3. Create a private key for the server:
+
+```
+openssl genrsa -out server.key 2048
+```
+
+4. Create a certificate signing request (CSR) for the server:
+
+```
+openssl req -new -key server.key -out server.csr
+```
+
+5. Sign the CSR with the CA:
+
+```
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt
+```
+
+6. Create a private key for the client:
+
+```
+openssl genrsa -out client.key 2048
+```
+
+7. Create a certificate signing request (CSR) for the client:
+
+```
+openssl req -new -key client.key -out client.csr
+```
+
+8. Sign the CSR with the CA:
+
+```
+openssl x509 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out client.crt
+```
+
+These commands will create a CA and mTLS certificates for a server and client using OpenSSL. You can use these commands as a reference to create your own CA and mTLS certificates.
+
+Source: Conversation with Bing, 8/18/2023
+(1) How To Create CA and Generate SSL/TLS Certificates & Keys - scriptcrunch. https://scriptcrunch.com/create-ca-tls-ssl-certificates-keys/.
+(2) Setup & verify mutual TLS authentication (MTLS) with openssl. https://www.golinuxcloud.com/mutual-tls-authentication-mtls/.
+(3) How to generate keys for Mutual TLS Authentication - Medium. https://medium.com/weekly-webtips/how-to-generate-keys-for-mutual-tls-authentication-a90f53bcec64.
+(4) How to do mutual tls authentication in C code using openssl?. https://stackoverflow.com/questions/53952695/how-to-do-mutual-tls-authentication-in-c-code-using-openssl.
+------------
+
