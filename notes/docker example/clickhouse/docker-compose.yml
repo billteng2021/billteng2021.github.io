@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  clickhouse_server:
+    image: clickhouse/clickhouse-server:latest
+    ports:
+      - 8123:8123
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse/
+      - clickhouse_logs:/var/log/clickhouse-server/
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cloudinfra
+    restart: always
+    
+volumes:
+    clickhouse_data:
+    clickhouse_logs:

@@ -1,0 +1,13 @@
+version: '3'
+services:
+    drone-server:
+        container_name: drone_server
+        image: drone/drone:latest
+        ports:
+            - "80:80"
+        volumes:
+            - drone-server-data:/var/lib/drone/
+        restart: always
+        environment:
+            - DRONE_OPEN=true
+            - DRONE_GITHUB=true

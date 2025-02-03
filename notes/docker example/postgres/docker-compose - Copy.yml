@@ -1,0 +1,34 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: dev_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${ECHA_PG_USER}
+      POSTGRES_PASSWORD: ${ECHA_PG_PASSWORD}
+      POSTGRES_DB: ${ECHA_PG_DB}
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+       - ./data/01_create_tables.sql:/docker-entrypoint-initdb.d/01_create_tables.sql
+       - ./data/02_load_localdata.sql:/docker-entrypoint-initdb.d/02_load_localdata.sql
+    ports:
+      - "5432:5432"
+    restart: always
+    
+  pgadmin:
+    container_name: dev_pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    restart: always
+      
+volumes:
+    pgdata:
+    pgadmin:

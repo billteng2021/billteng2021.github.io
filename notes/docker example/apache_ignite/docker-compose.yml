@@ -1,0 +1,12 @@
+version: '3'
+services:
+    drone-server:
+        container_name: dev_apache_ignite
+        image: apacheignite/ignite:latest
+        ports:
+            - "10800:10800"
+        volumes:
+            - ./apache-ignite-data:/storage
+        restart: always
+        environment:
+            - IGNITE_WORK_DIR=/storage

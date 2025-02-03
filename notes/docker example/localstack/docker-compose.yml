@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  localstack:
+    container_name: "dev-localstack"
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4510-4559:4510-4559"
+      - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
+    restart: always
+    environment:
+      - SERVICES=${SERVICES- }
+      - DEBUG=${DEBUG:-0}
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=${PORT_WEB_UI- }
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - START_WEB=1
+    volumes:
+      - "./tmp/localstack/var/lib/localstack:/var/lib/localstack"
+      - "./tmp/localstack/run/docker.sock:/var/run/docker.sock"

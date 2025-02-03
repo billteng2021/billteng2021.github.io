@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: dev_postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${ECHA_PG_USER}
+      POSTGRES_PASSWORD: ${ECHA_PG_PASSWORD}
+    volumes:
+       - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+         
+volumes:
+    pgdata:
+    

@@ -1,0 +1,3 @@
+
+first time: admin/admin
+you can update: admin/admin123

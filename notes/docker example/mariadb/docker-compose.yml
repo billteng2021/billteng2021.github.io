@@ -1,0 +1,18 @@
+version: '3.1'
+services:
+    db:
+        container_name: dev_mariadb
+        image: mariadb:latest
+        ports:
+            - 3306:3306
+        restart: always
+        environment:
+            MARIADB_ROOT_PASSWORD: admin
+            MARIADB_USER: demo
+            MARIADB_PASSWORD: demo
+            MARIADB_DATABASE: hst_demo
+        volumes:
+            - mariadb:/var/lib/mysql
+ 
+volumes:
+    mariadb:          
